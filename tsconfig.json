@@ -2,6 +2,7 @@
   "files": [],
   "compilerOptions": {
     "noImplicitAny": false,
+    "moduleResolution": "node",
     "types": ["element-plus/global"]
   },
   "references": [
