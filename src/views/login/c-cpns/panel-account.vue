@@ -12,7 +12,7 @@
   </div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts" name="account">
 import { reactive, ref } from 'vue'
 import { ElMessage } from 'element-plus'
 import type { FormRules, FormInstance } from 'element-plus'
@@ -22,12 +22,12 @@ import type { IAccount } from '@/types'
 
 // 1.定义内部的数据
 const account = reactive<IAccount>({
-  name: '',
-  password: ''
+  name: localCache.getCache('name') ?? '',
+  password: localCache.getCache('password') ?? ''
 })
 
 // 2.定义form的验证规则
-const accountRules = reactive<FormRules<IAccount>>({
+const accountRules: FormRules = {
   name: [
     { required: true, message: '必须输入用户名~', trigger: 'blur' },
     { pattern: /^[a-z0-9]{6,20}$/, message: '必须是6~20个字母或数字', trigger: 'blur' }
@@ -36,7 +36,7 @@ const accountRules = reactive<FormRules<IAccount>>({
     { required: true, message: '必须输入密码~', trigger: 'blur' },
     { pattern: /^[a-z0-9]{3,}$/, message: '密码必须在3位以上', trigger: 'blur' }
   ]
-})
+}
 
 // 3.定义登录逻辑
 const formRef = ref<FormInstance>()
@@ -49,6 +49,7 @@ function loginAction(isKeep: boolean) {
       const password = account.password
       // 1.登录操作
       loginStore.accountLoginAction({ name, password })
+
       // 2.记住密码
       if (isKeep) {
         localCache.setCache('name', name)
@@ -69,4 +70,4 @@ defineExpose({
 })
 </script>
 
-<style lang="less" scoped></style>
+<style scoped lang="less"></style>
