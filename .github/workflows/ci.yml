@@ -4,7 +4,7 @@ name: Build And Deploy To Github Pages
 # workflow的触发事件，这里代表main分支的push事件触发
 on:
   push:
-    branches: [ main ]
+    branches: [main]
 
 # 任务
 jobs:
@@ -20,6 +20,7 @@ jobs:
         uses: actions/checkout@v4
         # 这个为使用 JamesIves/github-pages-deploy-action脚本所需要的配置
         with:
+          #checkout依赖参数：不保存证书
           persist-credentials: false
 
       # 执行npm脚本打包项目
